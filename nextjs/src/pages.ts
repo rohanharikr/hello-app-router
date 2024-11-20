@@ -2,6 +2,9 @@
 
 import { serialize } from 'cookie'
 
+//this import should be moved to app.ts file
+import { headers, cookies } from 'next/headers'
+
 import type { 
     GetServerSidePropsContext, 
     GetServerSidePropsResult, 
@@ -102,10 +105,20 @@ export const getServerSideProps = async function (context:GetServerSidePropsCont
     }
 }
 
-export const getAuth = async function ( req: NextApiRequest): Promise<Auth> {
+//this fn should be moved to app.ts file
+export const getAuth = async function (): Promise<Auth> {
+    const _headers = await headers()
+    const _cookies = await cookies()
+    // app router prohibits accessing the entire request object
+    // only allows accessing headers and cookies
+    const req = {..._headers, ..._cookies}
+    // tbd: we dont have access to the original req object in app router
+    // fix ts complaint
     if (req.auth)
         return req.auth
     const dummyResponse: NextApiResponse = {} as NextApiResponse
+    // tbd: we dont have access to the original req object in app router
+    // fix ts complaint
     const helloReq = convertToHelloRequest(req, dummyResponse)
     const auth = await getAuthfromCookies( helloReq )
     return auth
