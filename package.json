@@ -6,10 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "quickstart": "npx @hellocoop/quickstart --nextjs"
   },
   "dependencies": {
     "@hellocoop/nextjs": "file:./nextjs",
+    "@hellocoop/quickstart": "file:./quickstart",
     "next": "^15.0.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
